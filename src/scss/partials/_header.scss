@@ -1,0 +1,40 @@
+.page_header {
+    background: $mainColor;
+    display: grid;
+    grid-template-columns: 100px auto auto auto auto 100px;
+    height: 50px;
+    text-transform: uppercase;
+    & a {
+        text-decoration: none;
+        color: $secondColor;
+    }
+}
+
+.page_logo_container {
+    display: flex;
+    grid-column: 2;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 2em;
+    & img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+.page_nav {
+    grid-column: 5;
+    align-self: center;
+    font-size: 1.25em;
+    &_list {
+        display: flex;
+        justify-content: flex-end;
+        & a {
+            padding-left: 5em;
+        }
+        & a:hover {
+            text-decoration: line-through;
+            text-decoration-color: $accentColor;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+.team {
+    height: 100%;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 100px auto auto auto auto 100px;
+    background: $mainColor;
+
+
+    & h2 {
+        grid-column: 2 / 6;
+        margin: 30px;
+        font-size: 40px;
+        text-transform: uppercase;
+        color: $secondColor;
+    }
+    & p {
+        grid-column: 2 / 6;
+        font-size: 1.15em;
+        margin: 70px 0;
+        font-family: sans-serif;
+        color: $secondColor;
+        font-weight: 200;
+    }
+}
+
+.team_img {
+    display: flex;
+    flex-wrap: no-wrap;
+    justify-content: space-between;
+    grid-column: 2 / 6;
+    
+
+    & img {
+        width: 20%;
+        height: auto;
+    }
+}

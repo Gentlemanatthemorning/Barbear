@@ -1,0 +1,36 @@
+.page_footer {
+    background: $mainColor;
+    display: grid;
+    grid-template-columns: 100px auto auto auto auto 100px;
+    height: 10em;
+    text-transform: uppercase;
+    font-size: .5em;
+    color: darkgray;
+    & a {
+        text-decoration: none;
+        color: darkgray;
+    }
+    & a:hover {
+        color: $secondColor;
+    }
+}
+
+.page_footer_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    grid-column: 2;
+
+}
+
+.footer_nav {
+    grid-column: 5;
+    align-self: center;
+    &_list {
+        display: flex;
+        justify-content: flex-end;
+        & a {
+            padding-left: 15em;
+        }
+    }
+}

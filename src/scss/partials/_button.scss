@@ -1,0 +1,26 @@
+.reserve {
+    position: absolute;
+    margin: 0px;
+    top: 60%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    text-transform: uppercase;
+    background: $accentColor;
+    color: $secondColor;
+    width: 15em;
+    height: 3em;
+    box-shadow: 0px 3px 7px #79787894;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    cursor: pointer;
+}
+
+.reserve:hover {
+    background: darken($accentColor, 10%);
+}
+.reserve:focus {
+    outline: none;
+    border: none;
+}
