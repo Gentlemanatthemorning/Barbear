@@ -1,5 +1,6 @@
 $mainColor: #232222;
 $secondColor: #ffffff;
 $accentColor: #be2623;
-$desktop: "screen and (min-width: 1024px)";
-$tablet: "screen and (min-width: 640px)";
+$desktop: 'screen and (min-width: 1024px)';
+$tablet: 'screen and (min-width: 768px)';
+$mobile: 'screen and (min-width: 360px)';

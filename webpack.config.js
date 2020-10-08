@@ -1,85 +1,172 @@
-//Konfiguracja Webpack
-var path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require("webpack");
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
+
+const isDev = process.env.NODE_ENV === 'development'
+const isProd = !isDev
+
+const optimization = () => {
+  const config = {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
+
+  if (isProd) {
+    config.minimizer = [
+      new OptimizeCssAssetWebpackPlugin(),
+      new TerserWebpackPlugin()
+    ]
+  }
+
+  return config
+}
+
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+
+const cssLoaders = extra => {
+  const loaders = [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        hmr: isDev,
+        reloadAll: true
+      },
+    },
+    'css-loader'
+  ]
+
+  if (extra) {
+    loaders.push(extra)
+  }
+
+  return loaders
+}
+
+const babelOptions = preset => {
+  const opts = {
+    presets: [
+      '@babel/preset-env'
+    ],
+    plugins: [
+      '@babel/plugin-proposal-class-properties'
+    ]
+  }
+
+  if (preset) {
+    opts.presets.push(preset)
+  }
+
+  return opts
+}
+
+const plugins = () => {
+  const base = [
+    new HTMLWebpackPlugin({
+      template: './index.html',
+      minify: {
+        collapseWhitespace: isProd
+      }
+    }),
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+      {
+        from: path.resolve(__dirname, 'src/favicon.ico'),
+        to: path.resolve(__dirname, 'dist')
+      }
+    ]
+    }),
+    new MiniCssExtractPlugin({
+      filename: filename('css')
+    })
+  ]
+
+  if (isProd) {
+    base.push(new BundleAnalyzerPlugin())
+  }
+
+  return base
+}
 
 module.exports = {
-  devtool: 'cheap-eval-source-map',
-  watch: true,
+  context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
-    main: path.join(__dirname, 'src', 'app.js')
+    main: ['@babel/polyfill', './index.js'],
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: filename('js'),
+    path: path.resolve(__dirname, 'dist')
   },
+  resolve: {
+    extensions: ['.js', '.json', '.png', '.svg'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    }
+  },
+  optimization: optimization(),
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
-    port: 9001,
+    port: 4200,
+    hot: isDev
   },
+  devtool: isDev ? 'source-map' : '',
+  plugins: plugins(),
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: cssLoaders()
+      },
+      {
+        test: /\.less$/,
+        use: cssLoaders('less-loader')
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: cssLoaders('sass-loader')
+      },
+      {
+        test: /\.(png|jpg|svg|gif)$/,
+        use: ['file-loader']
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot)$/,
+        use: ['file-loader']
+      },
+      {
+        test: /\.xml$/,
+        use: ['xml-loader']
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
+        loader: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env', '@babel/preset-react'
-            ],
-            "plugins": [
-              [
-                "@babel/plugin-proposal-class-properties", {
-                  "loose": true
-                }
-              ]
-            ]
-          }
+          options: babelOptions()
         }
-      }, {
-        test: /\.(png|jpe?g|svg|gif|woff|otf)$/i,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'img/'
-          }
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-typescript')
         }
-      }, {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-      }, {
-        test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
-      }, {
-        test: /\.html$/,
-        use: ['html-loader']
-      }, {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]'
-            }
-          }
-        ],
-        exclude: path.resolve(__dirname, 'src/index.html')
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        loader: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-react')
+        }
       }
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html'),
-      hash: true
-    }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({filename: "[name].css", chunkFilename: "[id].css"})
-  ]
+  }
 }

@@ -1,0 +1,12 @@
+.menu_toggle {
+    display: grid;
+    grid-column: 5;
+    color: white;
+    line-height: 50px;
+    text-align: right;
+    cursor: pointer;
+    display: block;
+    @media #{$desktop} {
+        display: none;
+    }
+}
