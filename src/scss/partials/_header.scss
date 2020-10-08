@@ -1,16 +1,12 @@
 .page_header {
     background: $mainColor;
     display: grid;
-    grid-template-columns: 50px auto auto auto auto 50px;
+    grid-template-columns: 100px auto auto auto auto 100px;
     height: 50px;
     text-transform: uppercase;
-    width: 100vw;
     & a {
         text-decoration: none;
         color: $secondColor;
-    }
-    @media #{$desktop} {
-        grid-template-columns: 100px auto auto auto auto 100px;
     }
 }
 
@@ -30,45 +26,15 @@
     grid-column: 5;
     align-self: center;
     font-size: 1.25em;
-    // display: none;
-    width: 100%;
-    position: absolute;
-    top: 50px;
-    background: $mainColor;
-    @media #{$desktop} {
-        position: relative;
-        top: auto;
-    }
-    
     &_list {
         display: flex;
         justify-content: flex-end;
-        display: block;
-        height: calc(100vh - 50px);
-        width: 100vw;
-        @media #{$desktop} {
-            display: inline-flex;
-            height: auto;
-        }
         & a {
             padding-left: 5em;
-            color: black;
-            border-bottom: 1px solid black;
-            width: 100%;
-            @media #{$desktop} {
-                color: $secondColor;
-            }
         }
         & a:hover {
             text-decoration: line-through;
             text-decoration-color: $accentColor;
         }
     }
-    @media #{$desktop} {
-        display: block;
-    }
-}
-
-.active {
-    left: 0;
 }
