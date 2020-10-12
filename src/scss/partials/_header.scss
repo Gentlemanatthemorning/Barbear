@@ -1,77 +1,77 @@
 .page_header {
-    background: $mainColor;
-    display: grid;
-    grid-template-columns: 50px auto auto auto auto 50px;
+  background: $mainColor;
+  display: grid;
+  grid-template-columns: 50px auto auto auto auto 50px;
 }
 .page_logo_container {
-    display: flex;
-    align-items: center;
-    & img {
-        height: 30px;
-        width: 30px;
+  display: flex;
+  align-items: center;
+  & img {
+    height: 30px;
+    width: 30px;
+  }
+  & h1 {
+    text-transform: uppercase;
+    font-size: 3em;
+    & a {
+      color: $secondColor;
+      text-decoration: none;
     }
-    & h1 {
-        text-transform: uppercase;
-        font-size: 3em;
-        & a {
-            color: $secondColor;
-            text-decoration: none;
-        }
-    }
+  }
 }
 .page_nav {
+  display: flex;
+  grid-column: 2 / 6;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 8vh;
+  &_list {
     display: flex;
-    grid-column: 2 / 6;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 8vh;
-
-    &_list {
-        display: flex;
-        justify-content: space-around;
-        width: 40%;
-        z-index: 2;
-        
-        & a {
-            color: $secondColor;
-            font-size: 20px;
-            text-decoration: none;
-        }
-        & a:hover {
-            text-decoration: line-through;
-            text-decoration-color: $accentColor;
-            color: darken($color: $secondColor, $amount: 20%);
-        }
-        & a:active {
-            background-color: $accentColor;
-        }
+    justify-content: space-around;
+    width: 40%;
+    z-index: 2;
+    & a {
+      color: $secondColor;
+      font-size: 20px;
+      text-decoration: none;
+      display: block;
+      height: 8vh;
+      line-height: 8vh;
+      width: 150%;
     }
+    & a:hover {
+      text-decoration: line-through;
+      text-decoration-color: $mainColor;
+      background-color: $accentColor;
+    }
+    & a:active {
+      background-color: $accentColor;
+    }
+  }
 }
-
 @media #{$mobile} {
-    body {
-        overflow-x: hidden;
+  body {
+    overflow-x: hidden;
+  }
+  .page_nav_list {
+    position: absolute;
+    right: 0;
+    height: 92vh;
+    top: 8vh;
+    background: $mainColor;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in;
+    & li {
+      opacity: 0;
+      border-bottom: 1px solid rgba(20, 20, 20, 0.6);
+      width: 100%;
     }
-    .page_nav_list {
-        position: absolute;
-        right: 0; 
-        height: 92vh;
-        top: 8vh;
-        background: $mainColor;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 50%;
-        transform: translateX(100%);
-        transition: transform .5s ease-in;
-        & li {
-            opacity: 0;
-            border-bottom: 1px solid rgba(20, 20, 20, 0.6);
-            width: 100%;
-        }
-    }
+  }
 }
-
 .page_nav_active {
-    transform: translateX(0%);
+  transform: translateX(0%);
 }

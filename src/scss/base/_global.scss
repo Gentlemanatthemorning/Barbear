@@ -1,29 +1,36 @@
-@import './variables';
-
+@import "./variables";
 body {
-    font-family: 'Red Rose', cursive;
-    background: #ffffff;
-    font-size: 10px;
+  font-family: "Red Rose", cursive;
+  background: #ffffff;
+  font-size: 10px;
 }
-.header {grid-area: header; }
-.mainimg { grid-area: mainimg; }
-.team { grid-area: team; }
-.app { grid-area: app; }
-.footer { grid-area: footer; }
-      
+.header {
+  grid-area: header;
+}
+.mainimg {
+  grid-area: mainimg;
+}
+.team {
+  grid-area: team;
+}
+.app {
+  grid-area: app;
+}
+.footer {
+  grid-area: footer;
+}
 .grid_container {
-    display: grid;
-    grid-template-areas:
-    'header header header header header header'
-    'mainimg mainimg mainimg mainimg mainimg mainimg'
-    'team team team team team team'
-    'app app app app app app'
-    'footer footer footer footer footer footer';
-    grid-template-columns: auto;
-    padding: 0;
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "mainimg mainimg mainimg mainimg mainimg mainimg"
+    "team team team team team team"
+    "app app app app app app"
+    "footer footer footer footer footer footer";
+  grid-template-columns: auto;
+  padding: 0;
 }
-
 .grid_container > div {
-    background-color: rgba(255, 255, 255, 0.8);
-    text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
 }
