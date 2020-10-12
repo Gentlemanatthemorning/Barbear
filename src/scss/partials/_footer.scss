@@ -1,10 +1,10 @@
 .page_footer {
     background: $mainColor;
     display: grid;
-    grid-template-columns: 100px auto auto auto auto 100px;
-    height: 10em;
+    grid-template-columns: 50px auto auto auto auto 50px;
+    height: 7em;
     text-transform: uppercase;
-    font-size: .5em;
+    font-size: 1em;
     color: darkgray;
     & a {
         text-decoration: none;
@@ -18,19 +18,34 @@
 .page_footer_container {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    grid-column: 2;
+    justify-content: space-between;
+    grid-column: 2 / 6;
 
 }
 
 .footer_nav {
-    grid-column: 5;
     align-self: center;
+    width: 100%;
+    justify-content: space-between;
     &_list {
         display: flex;
+        width: 100%;
         justify-content: flex-end;
         & a {
-            padding-left: 15em;
+            padding-left: 10em;
+        }
+    }
+}
+@media #{$mobile} {
+    .page_footer {
+        height: 10em;
+        font-size: .5em;
+    }
+    .footer_nav {
+        &_list {
+            & a {
+                padding-left: 3em;
+            }
         }
     }
 }
